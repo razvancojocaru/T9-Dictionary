@@ -1,0 +1,44 @@
+//Cojocaru Mihail-Razvan, 313CA
+
+	Programul realizat simuleaza comportamentul unui dictionar T9, folosind o 
+structura de tip trie, avand in fiecare nod o structura de tip treap. 
+
+	Mentionez ca programul nu este perfect modularizat, deoarece am incercat
+sa il optimizez in mai multe etape. Initial am folosit o structura asemanatoare
+cu "pair", care continea un int si un string, avand operatorii supraincarcati 
+pentru <, >, ==. Aceasta implementare s-a dovedit ineficienta, si am incercat
+in repetate randuri sa fac diverse modificari asupra programului, pentru a
+intra in timpul de 4 secunde. In final, am adoptat o abordare pe char*, 
+folosind stringuri C style (si folosind functii din string.h), implementare
+mult mai rapida decat cea cu string-uri C++, chiar daca un pic mai putin 
+eleganta.
+	
+	Structura "mypair" care retine cuvintele si numarul de aparitii ale acestora 
+contine un integer si un vector de char-uri, alocat static, cu o dimensiune 
+maxima de 25 de caractere. Structura mai contine si o functie make_pair, care 
+da valori celor 2 membrii. 
+
+	Citirea din fisier este facuta tot C-style, datorita vitezei mult mai mare
+fata de citirea cu stream-uri. String-urile auxiliare sunt alocate dinamic.
+
+	Structura Trie contine 2 metode, una din ele folosita pentru inserarea 
+cuvintelor, impreuna cu numarul lor de aparitii, in treap-ul corespunzator 
+(insert). Cealalta metoda (find) primeste ca parametru un cod numeric 
+(string de cifre) si un numar nr (integer), returnand al nr-lea cuvant in 
+ordinea numarului de aparitii (de la cel mai mare, la cel mai mic, sau in 
+ordine alfabetica, daca au acelasi numar de aparitii). 
+	In insert, am folosit un switch pentru a realiza transformarea din cuvant
+in cod numeric, inclus intr-o bucla for, care parcurge trie-ul.
+	In find, folosesc codurile ascii ale caracterelor cifre pentru a ajunge
+la nodul corespunzator din trie, apoi functia findK din treap pentru a 
+gasi cuvantul cautat.
+
+	Treap-ul nu este unul generic, desi are un template, metodele de insert si
+erase bazandu-se pe structura "mypair". Am ales aceasta metoda pentru 
+optimizare, obtinand astfel timpi mai mici decat prin supraincarcarea 
+operatorilor.
+
+	
+	In final, as avea de adaugat o sugestie, anume ca limita de timp mi s-a 
+parut un pic prea stricta, deoarece a fost dificil de implementat o tema
+"curata", care sa intre in limita de 4 secunde. 
